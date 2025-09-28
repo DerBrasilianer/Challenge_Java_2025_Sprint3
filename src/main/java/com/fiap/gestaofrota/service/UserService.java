@@ -37,7 +37,7 @@ public class UserService {
         UserEntity user = UserEntity.builder()
                 .username(dto.getUsername())
                 .password(passwordEncoder.encode(dto.getPassword()))
-                .role(Role.USER)
+                .role(dto.getRole() != null ? dto.getRole() : Role.USER)
                 .build();
 
         return userRepository.save(user);
