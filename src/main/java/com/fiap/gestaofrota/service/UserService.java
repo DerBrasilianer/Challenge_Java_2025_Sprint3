@@ -26,22 +26,16 @@ public class UserService {
 
     }
 
-    public UserEntity registerNewUser(UserDTO dto) {
-
-        if (existsByUsername(dto.getUsername())) {
-
-            throw new IllegalArgumentException("Nome de usuário já existe");
-
-        }
+    public UserEntity registerNewUser(UserDTO userDTO) {
+        Role role = (userDTO.getRole() != null) ? userDTO.getRole() : Role.USER;
 
         UserEntity user = UserEntity.builder()
-                .username(dto.getUsername())
-                .password(passwordEncoder.encode(dto.getPassword()))
-                .role(dto.getRole() != null ? dto.getRole() : Role.USER)
+                .username(userDTO.getUsername())
+                .password(passwordEncoder.encode(userDTO.getPassword()))
+                .role(role)
                 .build();
 
         return userRepository.save(user);
-
     }
 
 }
